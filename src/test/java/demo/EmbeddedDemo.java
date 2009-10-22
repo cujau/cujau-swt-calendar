@@ -1,18 +1,23 @@
 package demo;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import org.cujau.swt.calendar.SWTCalendar;
+import org.cujau.swt.calendar.SWTCalendarEvent;
+import org.cujau.swt.calendar.SWTCalendarListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.*;
-import org.cujau.swt.calendar.SWTCalendar;
-import org.cujau.swt.calendar.SWTCalendarEvent;
-import org.cujau.swt.calendar.SWTCalendarListener;
-
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 
 public class EmbeddedDemo {
     public static void main( String[] args ) {
@@ -58,7 +63,8 @@ public class EmbeddedDemo {
         }
 
         final SWTCalendar c = new SWTCalendar( shell, SWT.NONE | SWTCalendar.RED_SUNDAY );
-
+        c.setSelection( new Date() );
+        
         DateFormat df = DateFormat.getDateInstance( DateFormat.LONG, Locale.getDefault() );
         l.setText( df.format( c.getCalendar().getTime() ) );
         c.addSWTCalendarListener( new SWTCalendarListener() {

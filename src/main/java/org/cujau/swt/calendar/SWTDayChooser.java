@@ -54,16 +54,17 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
     private DayControl[] days;
     private int dayOffset;
     private Color activeSelectionBackground;
-    private Color inactiveSelectionBackground;
+//    private Color inactiveSelectionBackground;
     private Color activeSelectionForeground;
-    private Color inactiveSelectionForeground;
+//    private Color inactiveSelectionForeground;
     private Color otherMonthColor;
     private Calendar calendar;
     private Calendar today;
     private Locale locale;
     private List<SWTCalendarListener> listeners;
     private int style;
-
+    private Color baseForegroundColor;
+    
     public SWTDayChooser( Composite parent, int style ) {
         super( parent, style & ~RED_WEEKEND );
         this.style = style;
@@ -73,10 +74,11 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
 
         otherMonthColor = new Color( getDisplay(), 128, 128, 128 );
         activeSelectionBackground = getDisplay().getSystemColor( SWT.COLOR_LIST_SELECTION );
-        inactiveSelectionBackground = getDisplay().getSystemColor( SWT.COLOR_GRAY );
+//        inactiveSelectionBackground = getDisplay().getSystemColor( SWT.COLOR_GRAY );
         activeSelectionForeground = getDisplay().getSystemColor( SWT.COLOR_LIST_SELECTION_TEXT );
-        inactiveSelectionForeground = getForeground();
-
+//        inactiveSelectionForeground = getForeground();
+        baseForegroundColor = getForeground();
+        
         locale = Locale.getDefault();
 
         GridLayout gridLayout = new GridLayout();
@@ -205,35 +207,43 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
         }
         cal.add( Calendar.DAY_OF_MONTH, dayOffset );
 
-        Color foregroundColor = getForeground();
+//        Color foregroundColor = getForeground();
         for ( int i = 0; i < days.length; cal.add( Calendar.DAY_OF_MONTH, 1 ) ) {
             DayControl dayControl = days[i++];
             dayControl.setText( Integer.toString( cal.get( Calendar.DAY_OF_MONTH ) ) );
-            if ( isSameDay( cal, today ) ) {
-                // dayControl.setBorderColor(getDisplay().getSystemColor(SWT.COLOR_BLACK));
-                dayControl.setBorderColor( getDisplay().getSystemColor( SWT.COLOR_RED ) );
-            } else {
-                dayControl.setBorderColor( getBackground() );
-            }
+            dayControl.isSameMonth = isSameMonth( cal, calendar );
+            dayControl.isSelectedDay = isSameDay( cal, calendar );
+            dayControl.isToday = isSameDay( cal, today );
+            dayControl.dayOfWeek = cal.get( Calendar.DAY_OF_WEEK );
+            setDayColors( dayControl );
+        }
+    }
 
-            if ( isSameMonth( cal, calendar ) ) {
-                int d = cal.get( Calendar.DAY_OF_WEEK );
-                if ( d == Calendar.SUNDAY && ( style & RED_SUNDAY ) != 0 || d == Calendar.SATURDAY
-                     && ( style & RED_SATURDAY ) != 0 ) {
-                    dayControl.setForeground( getDisplay().getSystemColor( SWT.COLOR_DARK_RED ) );
-                } else {
-                    dayControl.setForeground( foregroundColor );
-                }
+    private void setDayColors( DayControl dayControl ) {
+        if ( dayControl.isSameMonth ) {
+            if ( dayControl.dayOfWeek == Calendar.SUNDAY && ( style & RED_SUNDAY ) != 0 
+                    || dayControl.dayOfWeek == Calendar.SATURDAY && ( style & RED_SATURDAY ) != 0 ) {
+                dayControl.setForeground( getDisplay().getSystemColor( SWT.COLOR_DARK_RED ) );
             } else {
-                dayControl.setForeground( otherMonthColor );
+                dayControl.setForeground( baseForegroundColor );
             }
+        } else {
+            dayControl.setForeground( otherMonthColor );
+        }
 
-            if ( isSameDay( cal, calendar ) ) {
-                dayControl.setBackground( getSelectionBackgroundColor() );
-                dayControl.setForeground( getSelectionForegroundColor() );
-            } else {
-                dayControl.setBackground( getBackground() );
-            }
+        if ( dayControl.isSelectedDay ) {
+            dayControl.setBackground( getSelectionBackgroundColor() );
+            dayControl.setForeground( getSelectionForegroundColor() );
+        } else {
+            dayControl.setBackground( getBackground() );
+        }
+
+        if ( dayControl.isToday ) {
+            // dayControl.setBorderColor(getDisplay().getSystemColor(SWT.COLOR_BLACK));
+//            dayControl.setBorderColor( getDisplay().getSystemColor( SWT.COLOR_RED ) );
+            dayControl.setForeground( getDisplay().getSystemColor( SWT.COLOR_RED ) );
+        } else {
+//            dayControl.setBorderColor( getBackground() );
         }
     }
 
@@ -400,21 +410,24 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
         calendar.get( Calendar.DAY_OF_YEAR ); // Force calendar update
         if ( day >= calendar.getActualMinimum( Calendar.DAY_OF_MONTH )
              && day <= calendar.getActualMaximum( Calendar.DAY_OF_MONTH ) ) {
-            int dayOfWeek = calendar.get( Calendar.DAY_OF_WEEK );
+//            int dayOfWeek = calendar.get( Calendar.DAY_OF_WEEK );
             // Stay on the same month.
             DayControl selectedDay = getSelectedDayControl();
-            selectedDay.setBackground( getBackground() );
-            if ( dayOfWeek == Calendar.SUNDAY ) {
-                selectedDay.setForeground( getDisplay().getSystemColor( SWT.COLOR_DARK_RED ) );
-            } else {
-                selectedDay.setForeground( getForeground() );
-            }
-
+//            selectedDay.setBackground( getBackground() );
+//            if ( dayOfWeek == Calendar.SUNDAY ) {
+//                selectedDay.setForeground( getDisplay().getSystemColor( SWT.COLOR_DARK_RED ) );
+//            } else {
+//                selectedDay.setForeground( getForeground() );
+//            }
+            selectedDay.isSelectedDay = false;
+            setDayColors( selectedDay );
             calendar.set( Calendar.DAY_OF_MONTH, day );
 
             selectedDay = getSelectedDayControl();
-            selectedDay.setBackground( getSelectionBackgroundColor() );
-            selectedDay.setForeground( getSelectionForegroundColor() );
+//            selectedDay.setBackground( getSelectionBackgroundColor() );
+//            selectedDay.setForeground( getSelectionForegroundColor() );
+            selectedDay.isSelectedDay = true;
+            setDayColors( selectedDay );
 
         } else {
             // Move to a different month.
@@ -430,11 +443,13 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
     }
 
     private Color getSelectionBackgroundColor() {
-        return isFocusControl() ? activeSelectionBackground : inactiveSelectionBackground;
+//        return isFocusControl() ? activeSelectionBackground : inactiveSelectionBackground;
+        return activeSelectionBackground;
     }
 
     private Color getSelectionForegroundColor() {
-        return isFocusControl() ? activeSelectionForeground : inactiveSelectionForeground;
+//        return isFocusControl() ? activeSelectionForeground : inactiveSelectionForeground;
+        return activeSelectionForeground;
     }
 
     /*
@@ -503,9 +518,13 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
     }
 
     static private class DayControl extends Composite implements Listener {
+        public int dayOfWeek;
         private Composite filler;
         private Label label;
-
+        boolean isSelectedDay;
+        boolean isToday;
+        boolean isSameMonth;
+        
         public DayControl( Composite parent ) {
             super( parent, SWT.NO_FOCUS );
             {
