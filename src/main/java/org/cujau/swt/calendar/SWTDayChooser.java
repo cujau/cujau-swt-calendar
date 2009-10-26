@@ -54,9 +54,9 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
     private DayControl[] days;
     private int dayOffset;
     private Color activeSelectionBackground;
-//    private Color inactiveSelectionBackground;
+    private Color inactiveSelectionBackground;
     private Color activeSelectionForeground;
-//    private Color inactiveSelectionForeground;
+    private Color inactiveSelectionForeground;
     private Color otherMonthColor;
     private Calendar calendar;
     private Calendar today;
@@ -74,9 +74,9 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
 
         otherMonthColor = new Color( getDisplay(), 128, 128, 128 );
         activeSelectionBackground = getDisplay().getSystemColor( SWT.COLOR_LIST_SELECTION );
-//        inactiveSelectionBackground = getDisplay().getSystemColor( SWT.COLOR_GRAY );
+        inactiveSelectionBackground = getDisplay().getSystemColor( SWT.COLOR_GRAY );
         activeSelectionForeground = getDisplay().getSystemColor( SWT.COLOR_LIST_SELECTION_TEXT );
-//        inactiveSelectionForeground = getForeground();
+        inactiveSelectionForeground = getForeground();
         baseForegroundColor = getForeground();
         
         locale = Locale.getDefault();
@@ -443,13 +443,13 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
     }
 
     private Color getSelectionBackgroundColor() {
-//        return isFocusControl() ? activeSelectionBackground : inactiveSelectionBackground;
-        return activeSelectionBackground;
+        return isFocusControl() ? activeSelectionBackground : inactiveSelectionBackground;
+//        return activeSelectionBackground;
     }
 
     private Color getSelectionForegroundColor() {
-//        return isFocusControl() ? activeSelectionForeground : inactiveSelectionForeground;
-        return activeSelectionForeground;
+        return isFocusControl() ? activeSelectionForeground : inactiveSelectionForeground;
+//        return activeSelectionForeground;
     }
 
     /*
