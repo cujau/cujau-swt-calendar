@@ -20,7 +20,7 @@
 
     <properties>
         <swt-groupId>org.eclipse.swt</swt-groupId>
-        <swt-artifactId>swt-gtk-linux-x86</swt-artifactId>
+        <swt-artifactId>swt-gtk-linux-x86_64</swt-artifactId>
         <swt-version>3.5</swt-version>
     </properties>
     
