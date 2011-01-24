@@ -623,7 +623,7 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
         public Point computeSize( int wHint, int hHint, boolean changed ) {
             if ( wHint == SWT.DEFAULT ) {
                 GC gc = new GC( this );
-                wHint = gc.textExtent( "22" ).x; //$NON-NLS-1$
+                wHint = gc.textExtent( "29." ).x; //$NON-NLS-1$
                 gc.dispose();
             }
 
