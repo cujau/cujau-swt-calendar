@@ -87,7 +87,13 @@ public class EmbeddedDemo {
 
             }
         } );
-
+        
+        spinner.Spinner spin = new spinner.Spinner(shell, SWT.NONE);
+        spin.setMinimum( 1 );
+        spin.setMaximum( 4 );
+        data = new RowData( 200, SWT.DEFAULT );
+        spin.setLayoutData( data );
+        
         shell.pack();
         shell.open();
         while ( !shell.isDisposed() ) {
