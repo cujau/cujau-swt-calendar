@@ -128,53 +128,55 @@ public class SWTCalendar extends Composite {
             yearChooser.setIncrement( 1 );
             yearChooser.setPageIncrement( 10 );
             yearChooser.setSelection( calendar.get( Calendar.YEAR ) );
-            yearChooser.addMouseListener( new MouseListener() {
-                public void mouseUp( MouseEvent arg0 ) {
-                    yearChooser.setSelection( yearChooser.getSelection() );
-                }
-
-                public void mouseDown( MouseEvent arg0 ) {
-                    yearChooser.setSelection( yearChooser.getSelection() );
-                }
-
-                public void mouseDoubleClick( MouseEvent arg0 ) {
-
-                }
-            } );
-            yearChooser.addKeyListener( new KeyListener() {
-                String oldSpinnerText;
-                String newSpinnerText;
-
-                public void keyPressed( KeyEvent event ) {
-                    try {
-                        oldSpinnerText = String.valueOf( yearChooser.getSelection() );
-                        String newText = String.valueOf( event.character );
-                        newSpinnerText = oldSpinnerText + newText;
-
-                        if ( Integer.valueOf( newSpinnerText ) >= yearChooser.getMaximum() ) {
-                            oldSpinnerText = String.valueOf( yearChooser.getSelection() );
-                            yearChooser.setSelection( Integer.valueOf( newText ) );
-                            newSpinnerText = newText;
-                        }
-                    } catch ( NumberFormatException e ) {
-//                        e.printStackTrace();
-                    }
-
-                }
-
-                public void keyReleased( KeyEvent event ) {
-                    try {
-                        yearChooser.setSelection( Integer.valueOf( newSpinnerText ) );
-                        dayChooser.setYear( yearChooser.getSelection() );
-                    } catch ( NumberFormatException e ) {
-                        
-                    }
-                }
-            } );
+//            yearChooser.addMouseListener( new MouseListener() {
+//                public void mouseUp( MouseEvent arg0 ) {
+//                    yearChooser.setSelection( yearChooser.getSelection() );
+//                }
+//
+//                public void mouseDown( MouseEvent arg0 ) {
+//                    yearChooser.setSelection( yearChooser.getSelection() );
+//                }
+//
+//                public void mouseDoubleClick( MouseEvent arg0 ) {
+//
+//                }
+//            } );
+//            yearChooser.addKeyListener( new KeyListener() {
+//                String oldSpinnerText;
+//                String newSpinnerText;
+//
+//                public void keyPressed( KeyEvent event ) {
+//                    try {
+//                        oldSpinnerText = String.valueOf( yearChooser.getSelection() );
+//                        String newText = String.valueOf( event.character );
+//                        newSpinnerText = oldSpinnerText + newText;
+//
+//                        if ( Integer.valueOf( newSpinnerText ) >= yearChooser.getMaximum() ) {
+//                            oldSpinnerText = String.valueOf( yearChooser.getSelection() );
+//                            yearChooser.setSelection( Integer.valueOf( newText ) );
+//                            newSpinnerText = newText;
+//                        }
+//                    } catch ( NumberFormatException e ) {
+////                        e.printStackTrace();
+//                    }
+//
+//                }
+//
+//                public void keyReleased( KeyEvent event ) {
+//                    try {
+//                        yearChooser.setSelection( Integer.valueOf( newSpinnerText ) );
+//                        dayChooser.setYear( yearChooser.getSelection() );
+//                    } catch ( NumberFormatException e ) {
+//                        
+//                    }
+//                }
+//            } );
             yearChooser.addSelectionListener( new SelectionAdapter() {
                 public void widgetSelected( SelectionEvent e ) {
                     if ( !settingYearMonth ) {
+                        settingYearMonth = true;
                         dayChooser.setYear( yearChooser.getSelection() );
+                        settingYearMonth = false;
                     }
                 }
             } );
@@ -197,7 +199,9 @@ public class SWTCalendar extends Composite {
             dayChooser.setLayoutData( gridData );
             dayChooser.addSWTCalendarListener( new SWTCalendarListener() {
                 public void dateChanged( SWTCalendarEvent event ) {
+                    if (!settingYearMonth) {
                     refreshYearMonth( event.getCalendar() );
+                    }
                 }
             } );
         }

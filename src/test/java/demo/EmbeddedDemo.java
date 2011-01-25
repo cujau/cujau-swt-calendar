@@ -11,8 +11,9 @@ import org.cujau.swt.calendar.SWTCalendarListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -22,16 +23,16 @@ import org.eclipse.swt.widgets.Shell;
 public class EmbeddedDemo {
     public static void main( String[] args ) {
         Display display = new Display();
-        Shell shell = new Shell( display, SWT.CLOSE );
-        RowLayout rowLayout = new RowLayout();
-        rowLayout.type = SWT.VERTICAL;
-        shell.setLayout( rowLayout );
+        Shell shell = new Shell( display );
+        shell.setLayout( new GridLayout() );
         final Label l = new Label( shell, SWT.NONE );
-        RowData data = new RowData( 200, SWT.DEFAULT );
+        GridData data = new GridData();
+        data.grabExcessHorizontalSpace = true;
+        data.widthHint = 200;
         l.setLayoutData( data );
 
         Composite localePanel = new Composite( shell, SWT.NONE );
-        localePanel.setLayout( new RowLayout() );
+        localePanel.setLayout( new GridLayout() );
         Label localeLabel = new Label( localePanel, SWT.NONE );
         localeLabel.setText( "Locale:" );
         final Combo localeCombo = new Combo( localePanel, SWT.DROP_DOWN | SWT.READ_ONLY );
@@ -64,7 +65,9 @@ public class EmbeddedDemo {
 
         final SWTCalendar c = new SWTCalendar( shell, SWT.NONE | SWTCalendar.RED_SUNDAY );
         c.setSelection( new Date() );
-        
+        data = new GridData();
+        data.grabExcessHorizontalSpace = true;
+        c.setLayoutData(data );
         DateFormat df = DateFormat.getDateInstance( DateFormat.LONG, Locale.getDefault() );
         l.setText( df.format( c.getCalendar().getTime() ) );
         c.addSWTCalendarListener( new SWTCalendarListener() {
@@ -91,7 +94,10 @@ public class EmbeddedDemo {
         spinner.Spinner spin = new spinner.Spinner(shell, SWT.NONE);
         spin.setMinimum( 1 );
         spin.setMaximum( 4 );
-        data = new RowData( 200, SWT.DEFAULT );
+        data = new GridData();
+        data.grabExcessHorizontalSpace = true;
+        data.grabExcessVerticalSpace = true;
+        data.widthHint = 200;
         spin.setLayoutData( data );
         
         shell.pack();

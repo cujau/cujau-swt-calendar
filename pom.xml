@@ -20,8 +20,8 @@
 
     <properties>
         <swt-groupId>org.eclipse.swt</swt-groupId>
-        <swt-artifactId>swt-macosx-cocoa-x86_64</swt-artifactId>
-        <swt-version>3.6</swt-version>
+        <swt-artifactId>swt-gtk-linux-x86_64</swt-artifactId>
+        <swt-version>3.6.1</swt-version>
     </properties>
     
     <dependencies>

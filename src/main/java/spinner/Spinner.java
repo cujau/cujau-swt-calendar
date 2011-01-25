@@ -8,6 +8,7 @@ package spinner;
 import java.util.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.events.*;
  
@@ -19,6 +20,7 @@ public class Spinner extends Composite {
      
       public Spinner(Composite parent, int style) {
             super(parent, style);
+//            setLayout( new GridLayout( 2, false ) );
             text = new Text(this, style | SWT.SINGLE | SWT.BORDER);
             up = new Button(this, style | SWT.ARROW | SWT.UP);
             down = new Button(this, style | SWT.ARROW | SWT.DOWN);
