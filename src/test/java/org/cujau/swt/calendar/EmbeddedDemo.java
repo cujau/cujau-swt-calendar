@@ -1,4 +1,4 @@
-package demo;
+package org.cujau.swt.calendar;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -13,13 +13,14 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.Ignore;
 
+@Ignore
 public class EmbeddedDemo {
     public static void main( String[] args ) {
         Display display = new Display();
@@ -90,15 +91,6 @@ public class EmbeddedDemo {
 
             }
         } );
-        
-        spinner.Spinner spin = new spinner.Spinner(shell, SWT.NONE);
-        spin.setMinimum( 1 );
-        spin.setMaximum( 4 );
-        data = new GridData();
-        data.grabExcessHorizontalSpace = true;
-        data.grabExcessVerticalSpace = true;
-        data.widthHint = 200;
-        spin.setLayoutData( data );
         
         shell.pack();
         shell.open();

@@ -2,6 +2,8 @@
  * SWTCalendar.java - A calendar component for SWT Author: Mark Bryan Yu Modified by: Sergey
  * Prigogin swtcalendar.sourceforge.net
  * 
+ * Updated for improved handing of entering dates by hand: Nicholas Rahn
+ *  
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
  * including without limitation the rights to use, copy, modify, merge, publish, distribute,
@@ -24,10 +26,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -128,49 +126,6 @@ public class SWTCalendar extends Composite {
             yearChooser.setIncrement( 1 );
             yearChooser.setPageIncrement( 10 );
             yearChooser.setSelection( calendar.get( Calendar.YEAR ) );
-//            yearChooser.addMouseListener( new MouseListener() {
-//                public void mouseUp( MouseEvent arg0 ) {
-//                    yearChooser.setSelection( yearChooser.getSelection() );
-//                }
-//
-//                public void mouseDown( MouseEvent arg0 ) {
-//                    yearChooser.setSelection( yearChooser.getSelection() );
-//                }
-//
-//                public void mouseDoubleClick( MouseEvent arg0 ) {
-//
-//                }
-//            } );
-//            yearChooser.addKeyListener( new KeyListener() {
-//                String oldSpinnerText;
-//                String newSpinnerText;
-//
-//                public void keyPressed( KeyEvent event ) {
-//                    try {
-//                        oldSpinnerText = String.valueOf( yearChooser.getSelection() );
-//                        String newText = String.valueOf( event.character );
-//                        newSpinnerText = oldSpinnerText + newText;
-//
-//                        if ( Integer.valueOf( newSpinnerText ) >= yearChooser.getMaximum() ) {
-//                            oldSpinnerText = String.valueOf( yearChooser.getSelection() );
-//                            yearChooser.setSelection( Integer.valueOf( newText ) );
-//                            newSpinnerText = newText;
-//                        }
-//                    } catch ( NumberFormatException e ) {
-////                        e.printStackTrace();
-//                    }
-//
-//                }
-//
-//                public void keyReleased( KeyEvent event ) {
-//                    try {
-//                        yearChooser.setSelection( Integer.valueOf( newSpinnerText ) );
-//                        dayChooser.setYear( yearChooser.getSelection() );
-//                    } catch ( NumberFormatException e ) {
-//                        
-//                    }
-//                }
-//            } );
             yearChooser.addSelectionListener( new SelectionAdapter() {
                 public void widgetSelected( SelectionEvent e ) {
                     if ( !settingYearMonth ) {
@@ -199,8 +154,8 @@ public class SWTCalendar extends Composite {
             dayChooser.setLayoutData( gridData );
             dayChooser.addSWTCalendarListener( new SWTCalendarListener() {
                 public void dateChanged( SWTCalendarEvent event ) {
-                    if (!settingYearMonth) {
-                    refreshYearMonth( event.getCalendar() );
+                    if ( !settingYearMonth ) {
+                        refreshYearMonth( event.getCalendar() );
                     }
                 }
             } );
