@@ -92,6 +92,7 @@ public class SWTCalendar extends Composite {
             prevMonthButton.setLayoutData( new GridData( GridData.VERTICAL_ALIGN_FILL ) );
             prevMonthButton.setRepeatDelay( 100 );
             prevMonthButton.addSelectionListener( new SelectionAdapter() {
+                @Override
                 public void widgetSelected( SelectionEvent e ) {
                     previousMonth();
                 }
@@ -112,6 +113,7 @@ public class SWTCalendar extends Composite {
             monthChooser = new SWTMonthChooser( composite );
             monthChooser.setLayoutData( new GridData( GridData.FILL_VERTICAL ) );
             monthChooser.addSelectionListener( new SelectionAdapter() {
+                @Override
                 public void widgetSelected( SelectionEvent e ) {
                     if ( !settingYearMonth ) {
                         dayChooser.setMonth( monthChooser.getMonth() );
@@ -127,6 +129,7 @@ public class SWTCalendar extends Composite {
             yearChooser.setPageIncrement( 10 );
             yearChooser.setSelection( calendar.get( Calendar.YEAR ) );
             yearChooser.addSelectionListener( new SelectionAdapter() {
+                @Override
                 public void widgetSelected( SelectionEvent e ) {
                     if ( !settingYearMonth ) {
                         settingYearMonth = true;
@@ -141,6 +144,7 @@ public class SWTCalendar extends Composite {
             nextMonthButton.setLayoutData( new GridData( GridData.VERTICAL_ALIGN_FILL ) );
             nextMonthButton.setRepeatDelay( 100 );
             nextMonthButton.addSelectionListener( new SelectionAdapter() {
+                @Override
                 public void widgetSelected( SelectionEvent e ) {
                     nextMonth();
                 }
@@ -153,6 +157,7 @@ public class SWTCalendar extends Composite {
             gridData.horizontalSpan = 3;
             dayChooser.setLayoutData( gridData );
             dayChooser.addSWTCalendarListener( new SWTCalendarListener() {
+                @Override
                 public void dateChanged( SWTCalendarEvent event ) {
                     if ( !settingYearMonth ) {
                         refreshYearMonth( event.getCalendar() );
@@ -234,6 +239,7 @@ public class SWTCalendar extends Composite {
      * 
      * @see org.eclipse.swt.widgets.Control#setFont(org.eclipse.swt.graphics.Font)
      */
+    @Override
     public void setFont( Font font ) {
         super.setFont( font );
         monthChooser.setFont( font );

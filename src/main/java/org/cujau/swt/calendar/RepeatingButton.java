@@ -47,6 +47,7 @@ public class RepeatingButton extends Button {
     public RepeatingButton( Composite parent, int style ) {
         super( parent, style );
         addMouseListener( new MouseAdapter() {
+            @Override
             public void mouseDown( MouseEvent event ) {
                 cancelRepeater();
 
@@ -58,6 +59,7 @@ public class RepeatingButton extends Button {
                 }
             }
 
+            @Override
             public void mouseUp( MouseEvent event ) {
                 if ( event.button == 1 ) { // Left click
                     cancelRepeater();
@@ -66,16 +68,19 @@ public class RepeatingButton extends Button {
         } );
 
         addMouseTrackListener( new MouseTrackAdapter() {
+            @Override
             public void mouseExit( MouseEvent e ) {
                 cancelRepeater();
             }
         } );
     }
 
+    @Override
     public void addSelectionListener( SelectionListener listener ) {
         selectionListeners.add( listener );
     }
 
+    @Override
     public void removeSelectionListener( SelectionListener listener ) {
         selectionListeners.remove( listener );
     }
@@ -137,6 +142,7 @@ public class RepeatingButton extends Button {
      * 
      * @see org.eclipse.swt.widgets.Widget#checkSubclass()
      */
+    @Override
     protected void checkSubclass() {}
 
     private class Repeater implements Runnable {
@@ -153,6 +159,7 @@ public class RepeatingButton extends Button {
          * 
          * @see java.lang.Runnable#run()
          */
+        @Override
         public void run() {
             if ( !canceled ) {
                 buttonPressed( stateMask, (int) System.currentTimeMillis() );

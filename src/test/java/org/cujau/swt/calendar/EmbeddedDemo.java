@@ -72,6 +72,7 @@ public class EmbeddedDemo {
         DateFormat df = DateFormat.getDateInstance( DateFormat.LONG, Locale.getDefault() );
         l.setText( df.format( c.getCalendar().getTime() ) );
         c.addSWTCalendarListener( new SWTCalendarListener() {
+            @Override
             public void dateChanged( SWTCalendarEvent calendarEvent ) {
                 Locale _locale = locales[localeCombo.getSelectionIndex()];
                 DateFormat df2 = DateFormat.getDateInstance( DateFormat.LONG, _locale );
@@ -80,6 +81,7 @@ public class EmbeddedDemo {
         } );
 
         localeCombo.addSelectionListener( new SelectionListener() {
+            @Override
             public void widgetSelected( SelectionEvent event ) {
                 Locale _locale = locales[localeCombo.getSelectionIndex()];
                 DateFormat df2 = DateFormat.getDateInstance( DateFormat.LONG, _locale );
@@ -87,6 +89,7 @@ public class EmbeddedDemo {
                 c.setLocale( _locale );
             }
 
+            @Override
             public void widgetDefaultSelected( SelectionEvent event ) {
 
             }
