@@ -1,6 +1,6 @@
-# CUJAU-DB - Common Utilities for Java Appliation Use - Database Framework
+# CUJAU SWT Calendar Widget
 
-Cujau-db is a framework for accessing a database, similar to spring-jdbc, but with a significantly smaller footprint.
+Cujau-swt-calendar is an SWT widget that displays a selectable calendar widget. Originally used because SWT didn't have complete crossplatform support for all calendar features we needed. Originally copied from swtcalendar.sourcforge.net.
 
 ### License
 
