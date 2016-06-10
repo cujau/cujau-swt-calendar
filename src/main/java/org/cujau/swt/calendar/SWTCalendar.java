@@ -63,7 +63,7 @@ public class SWTCalendar extends Composite {
     public SWTCalendar( Composite parent, int style ) {
         super( parent, ( style & ~( SWT.FLAT | RED_WEEKEND ) ) );
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(Locale.getDefault( Locale.Category.DISPLAY ));
 
         {
             final GridLayout gridLayout = new GridLayout();
@@ -215,7 +215,7 @@ public class SWTCalendar extends Composite {
     }
 
     public void setSelection( Date day ) {
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance(Locale.getDefault( Locale.Category.DISPLAY ));
         cal.setTime( day );
         setCalendar( cal );
     }
