@@ -39,7 +39,6 @@ import java.util.Locale;
 
 public class SWTDayChooser extends Composite implements MouseListener, FocusListener, TraverseListener,
         KeyListener {
-    private static final Logger LOG = LoggerFactory.getLogger( SWTDayChooser.class );
     /**
      * Style constant for making Sundays red.
      */
@@ -151,7 +150,6 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
         calendar.setLenient( true );
         today = (Calendar) calendar.clone();
         int firstDayOfWeek = calendar.getFirstDayOfWeek();
-        LOG.debug("fDOW={}", firstDayOfWeek);
         DateFormatSymbols dateFormatSymbols = new DateFormatSymbols( locale );
         String[] dayNames = dateFormatSymbols.getShortWeekdays();
         int minLength = Integer.MAX_VALUE;
@@ -204,7 +202,6 @@ public class SWTDayChooser extends Composite implements MouseListener, FocusList
         calendar.get( Calendar.DAY_OF_YEAR ); // Force calendar update
         Calendar cal = (Calendar) calendar.clone();
         int firstDayOfWeek = cal.getFirstDayOfWeek();
-        LOG.debug("fDOW2={}", firstDayOfWeek);
         cal.set( Calendar.DAY_OF_MONTH, 1 );
 
         dayOffset = firstDayOfWeek - cal.get( Calendar.DAY_OF_WEEK );
